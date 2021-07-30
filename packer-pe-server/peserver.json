@@ -1,0 +1,34 @@
+{
+  "builders": [
+    {
+      "type": "googlecompute",
+      "project_id": "<project name>",
+      "source_image": "centos-7-v20210721",
+      "ssh_username": "<service account name>",
+      "zone": "<zone>",
+      "account_file": "gcp.json"
+    }
+  ],
+  "provisioners": [
+    {
+        "type": "file",
+        "source": "pe.conf",
+        "destination": "/var/tmp/pe.conf"
+    },
+    {
+      "type": "file",
+      "source": "master.sh",
+      "destination": "/var/tmp/master.sh"
+    },
+    {
+      "type": "file",
+      "source": "autosign.conf",
+      "destination": "/var/tmp/autosign.conf"
+    },
+    {
+      "type": "file",
+      "source": "id-control_repo.rsa",
+      "destination": "/var/tmp/id-control_repo.rsa"
+    }
+  ]
+}
