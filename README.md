@@ -9,7 +9,7 @@ https://cloud.google.com/resource-manager/docs/creating-managing-projects
 Follow the steps in this document to setup a project, create a service account and a service account key.
 https://learn.hashicorp.com/tutorials/terraform/google-cloud-platform-build?in=terraform/gcp-get-started#set-up-gcp
 
-Create a json service account key as and name it ```gcp.json```.
+Create a json service account key and name it ```gcp.json```.
 
 ## Build a new packer image
 
