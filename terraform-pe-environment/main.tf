@@ -10,9 +10,9 @@ terraform {
 // Setup google
 provider "google" {
   credentials = file("gcp.json")
-  project     = "emea-pse-k8s"
-  region      = "europe-west2"
-  zone        = "europe-west2-c"
+  project     = "<project name>"
+  region      = "<region>"
+  zone        = "<zone>"
 }
 
 // Terraform plugin for creating random ids
@@ -38,14 +38,14 @@ resource "google_compute_instance" "pe" {
   tags         = ["puppet", "enterprise"]
    
   metadata = {
-    ssh-keys = "andrew:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "<ssh name>:${file("~/.ssh/id_rsa.pub")}"
   }
 
   metadata_startup_script = "sudo chmod +x /var/tmp/master.sh; sudo /var/tmp/master.sh > /var/puppetbuild.log"
 
   boot_disk {
     initialize_params {
-      image = "packer-1627394496"
+      image = "<packer-number>"
     }
   }
 
@@ -64,7 +64,7 @@ resource "google_compute_instance" "node1" {
   tags         = ["puppet", "target"]
    
   metadata = {
-    ssh-keys = "andrew:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "<ssh name>:${file("~/.ssh/id_rsa.pub")}"
   }
 
   boot_disk {
