@@ -1,0 +1,7 @@
+apiVersion: cluster.kurl.sh/v1beta1
+kind: Installer
+metadata:
+  name: patch
+spec:
+  rook:
+    blockDeviceFilter: /dev/disk/by-id/google-ceph
