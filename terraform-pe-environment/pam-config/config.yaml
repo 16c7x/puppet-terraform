@@ -1,7 +1,34 @@
 apiVersion: cluster.kurl.sh/v1beta1
 kind: Installer
 metadata:
-  name: patch
+  name: puppet-application-manager
 spec:
+  kubernetes:
+    version: 1.19.10
+    HACluster: true
+    loadBalancerAddress: "TEST"
+  weave:
+    version: 2.8.1
+    podCidrRange: /22
   rook:
+    version: 1.5.11
+    isBlockStorageEnabled: true
+    isSharedFilesystemDisabled: true
     blockDeviceFilter: /dev/disk/by-id/google-ceph
+  contour:
+    version: 1.15.1
+  registry:
+    version: 2.7.1
+  prometheus:
+    version: 0.48.1-16.10.0
+  kotsadm:
+    version: 1.44.1
+    applicationSlug: puppet-application-manager
+  velero:
+    version: 1.6.0
+  ekco:
+    version: 0.10.1
+  containerd:
+    version: 1.4.4
+  metricsServer:
+    version: 0.4.1
