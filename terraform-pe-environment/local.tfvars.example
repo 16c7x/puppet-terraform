@@ -1,0 +1,14 @@
+# Where to find the GCP credentials that you downloaded (required)
+credentials_file = "~/something.json"
+
+# Name of your project (required)
+project_name = "example"
+
+# Path to your SSH public key (optional, default: "~/.ssh/id_rsa.pub")
+ssh_pubkey_file = "~/.ssh/id_rsa.pub"
+
+# Path to your SSH private key (optional, default: "~/.ssh/id_rsa")
+ssh_privatekey_file = "~/.ssh/id_rsa"
+
+# Number of your packer image
+packer_number = "12345"

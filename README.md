@@ -9,7 +9,7 @@ https://cloud.google.com/resource-manager/docs/creating-managing-projects
 Follow the steps in this document to setup a project, create a service account and a service account key.
 https://learn.hashicorp.com/tutorials/terraform/google-cloud-platform-build?in=terraform/gcp-get-started#set-up-gcp
 
-Create a json service account key and name it ```gcp.json```.
+Create a json service account key save it somewhere safe **DO NOT COMMIT IT TO GIT.**
 
 ## Build a new packer image
 
@@ -38,39 +38,35 @@ From within the ```packer-pe-server``` directory, run ```packer verify peserver.
 
 ## Build the Environment
 
-Make sure you have the ```gcp.json``` file in the ```terraform-pe-environment``` directory.
-Edit the ```terraform-pe-environment/main.tf``` and fill out the relevant project info;
+Make a copy of the variables file for yourself:
 
-```ruby
-provider "google" {
-  credentials = file("gcp.json")
-  project     = "<project name>"
-  region      = "<region>"
-  zone        = "<zone>"
-}
+```
+cp terraform-pe-environment/local.tfvars.example terraform-pe-environment/local.tfvars
 ```
 
-In the same file edit the ssh key info to add the an account name, you'll need to do this in two different places.
+Modify these variables to match your environment:
 
-```ruby
-metadata = {
-  ssh-keys = "<ssh name>:${file("~/.ssh/id_rsa.pub")}"
-}
+```terraform
+# Where to find the GCP credentials that you downloaded (required)
+credentials_file = "~/something.json"
+
+# Name of your project (required)
+project_name = "example"
+
+# Path to your SSH public key (optional, default: "~/.ssh/id_rsa.pub")
+ssh_pubkey_file = "~/.ssh/id_rsa.pub"
+
+# Path to your SSH private key (optional, default: "~/.ssh/id_rsa")
+ssh_privatekey_file = "~/.ssh/id_rsa"
+
+# Number of your packer image
+packer_number = "12345"
 ```
 
 *I've used the service account name here but I don't think it matters, I think any random name would work, this just sets up a public/private key pair with your laptop*
 
-Hopefully you haven't lost the packer image name, it goes in here;
 
-```ruby
-boot_disk {
-  initialize_params {
-    image = "<packer-number>"
-  }
-}
-```
+From the `terraform-pe-environment` directory run `terraform init` and then `terraform apply -var-file=local.tfvars`.
 
-From the ```terraform-pe-environment``` directory run ```teerraform init``` and then ```terraform apply```.
-
-When it's finished it should present you with two ip addresses, ssh to the pe server using ```ssh <ssh name>@<ip>``` and then ```tail -f  /var/puppetbuild.log``` to watch the build finish off. When it's done you can login to Puppet on ```https://<ip>/auth/login?```.
+When it's finished it should present you with two ip addresses, ssh to the pe server using `ssh <ssh name>@<ip>` and then `tail -f  /var/puppetbuild.log` to watch the build finish off. When it's done you can login to Puppet on `https://<ip>/auth/login?`.
 
